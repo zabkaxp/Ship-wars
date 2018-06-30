@@ -13,8 +13,6 @@ header{
 }
 #hship{
 	width:950px;
-
-
 }
 
 nav{
@@ -83,7 +81,7 @@ ol>li>ul>li:hover{
 	
 main{
 	width:900px;
-	min-height:500px;
+	min-height:800px;
 	margin:auto;
 	background-color:#fff;
 	text-align:center;
@@ -91,7 +89,14 @@ main{
 	margin-bottom:45px;
 	padding-left:25px;
 	padding-right:25px;
+    position:relative;
 	}
+
+#container{
+    display:grid;
+    grid-template-columns:20% 80%;  
+   }
+
 #hmain{
 	color:#162f59;
 	text-align:center;
@@ -107,37 +112,80 @@ footer{
 	color:white;
 	background-color:#2372a0;
 }
-#table1{
-	margin-left:auto;
-	margin-right:auto;
-	border-collapse:collapse;
-	width:55%;
-}
-td{
-	border:2px solid black;
-	
-}
-td:hover{
-	transform:scale(1.1);
-}
 
-th, td{
-	padding:15px;
-	text-align:center;
-	transition:padding 2s;
-}
-td{
-	background:linear-gradient(top, #d7dae0 0%, #ffffff 100%);
-	background:-webkit-linear-gradient(top, #d7dae0 0%, #ffffff 100%);
-	
-	
-}
-
-td:hover{
-	cursor:pointer;
-	background:#c6cad0;;
-}
 .reset:hover{
 	cursor:pointer;
 	color:#2caa36;
+}
+#letters{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding-top:30px;
+    padding-bottom:10px;
+    padding-left:48px;
+    font-weight: 600;
+}
+
+#letters>div{
+    font-size:26px;
+    display: block;
+    vertical-align: middle;
+    width:74px;
+    float:left;
+    text-align: center;
+}
+
+#nums{
+    padding-right:-20px;
+    font-weight:600;
+    text-align:right;
+    padding-top:23px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+ }
+
+#nums>div{
+    font-size:26px;
+    display: block;
+    vertical-align: middle;
+    height:74px;
+}
+
+#table>div{
+    border: 2px solid #2372a0;
+    margin:0;
+    padding:0;
+    background:linear-gradient(top, #d7dae0 0%, #ffffff 100%);
+    background:-webkit-linear-gradient(top, #d7dae0 0%, #ffffff 100%);
+	height:70px;
+    width:70px;
+    margin: 1px solid black;
+}
+
+#table>div:hover{
+    
+    cursor:pointer;
+	background-image:url('Seeit.gif');
+}
+#table{
+    position:absolute;
+    left:250px;
+    top:200px;
+    max-width:440px;
+    max-height: 440px;
+    margin:0;
+    padding:0;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows:repeat(6, 1fr);
+    grid-column-gap: 0px;
+    column-gap:0px;
+}
+
+#score{
+    padding-top:20px;
+    padding-bottom:20px;
+    font-size:22px;
 }
