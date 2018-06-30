@@ -6,8 +6,7 @@
 <meta name="keywords" content="game, ships, war">
 <meta name="author" content="Marta Wojno">
 <meta name="description" content="The newest version of the battlefield game">
-<meta name="viewport" content="width=device-width, initial=scale=1.0">
-<script type="text/javascript" src="logic.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -30,71 +29,57 @@
 </nav>
 <main>
 <header id="hmain"><h1>Let's try your luck!!</h1></header>
-<div id="info">Shoot 3 one-field ships and 1 three-field ship!</div>
-<table id="table1">
-	<thead>
-		<tr>
-			<th><th>A<th>B<th>C<th>D<th>E<th>F
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th>1</th>
-			<td id="0" class="field" onclick="check(0);"></td>
-			<td id="1" class="field" onclick="check(1);"></td>
-			<td id="2" class="field" onclick="check(2);"></td>
-			<td id="3" class="field" onclick="check(3);"></td>
-			<td id="4" class="field" onclick="check(4);"></td>
-			<td id="5" class="field" onclick="check(5);"></td>
-		</tr>
-		<tr>
-			<th>2</th>
-			<td id="6" onclick="check(6);"></td>
-			<td id="7" onclick="check(7);"></td>
-			<td id="8" onclick="check(8);"></td>
-			<td id="9" onclick="check(9);"></td>
-			<td id="10" onclick="check(10);"></td>
-			<td id="11" onclick="check(11);"></td>
-		</tr>
-		<tr>
-			<th>3</th>
-			<td id="12" onclick="check(12);"></td>
-			<td id="13" onclick="check(13);"></td>
-			<td id="14" onclick="check(14);"></td>
-			<td id="15" onclick="check(15);"></td>
-			<td id="16" onclick="check(16);"></td>
-			<td id="17" onclick="check(17);"></td>
-		</tr>
-		<tr>
-			<th>4</th>
-			<td id="18" onclick="check(18);"></td>
-			<td id="19" onclick="check(19);"></td>
-			<td id="20" onclick="check(20);"></td>
-			<td id="21" onclick="check(21);"></td>
-			<td id="22" onclick="check(22);"></td>
-			<td id="23" onclick="check(23);"></td>
-		</tr>
-		<tr>
-			<th>5</th>
-			<td id="24" onclick="check(24);"></td>
-			<td id="25" onclick="check(25);"></td>
-			<td id="26" onclick="check(26);"></td>
-			<td id="27" onclick="check(27);"></td>
-			<td id="28" onclick="check(28);"></td>
-			<td id="29" onclick="check(29);"></td>
-		</tr>
-		<tr>
-			<th>6</th>
-			<td id="30" onclick="check(30);"></td>
-			<td id="31" onclick="check(31);"></td>
-			<td id="32" onclick="check(32);"></td>
-			<td id="33" onclick="check(33);"></td>
-			<td id="34" onclick="check(34);"></td>
-			<td id="35" onclick="check(35);"></td>
-		</tr>
-	</tbody>
-</table>
+<div id="info">Shoot 5 three-field ships and win the game!</div>
+<div id="container">
+    <div id="letters">
+        <div>A</div><div>B</div><div>C</div><div>D</div><div>E</div><div>F</div>
+    </div>
+    <div id="nums">
+        <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+    </div>
+    <section id="table">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+</div>    
+    <div id="score">Score: 0 triple ships shot!</div>
+    <div id="missed">0 missed hits</div>
 </main>
 <footer>All rights reserved &copy Marta Wojno</footer>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
