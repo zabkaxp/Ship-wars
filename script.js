@@ -5,9 +5,9 @@ var base = {
         function(){
            return this.colNum * this.rowNum
         },
-    numOfShips:5,
-    shipLength:3,
-    winningComb:[],
+    numOfShips: 5,
+    shipLength: 3,
+    winningComb: [],
     missed: new Audio("dropInWater.wav"),
     hit: new Audio("hit.wav"),
     shotShip: new Audio("fanf.wav"),
@@ -15,32 +15,31 @@ var base = {
 
 }
 
-var view ={
-    score: document.getElementById("#score"),
-    missed: document.getElementById("#missed"),
+var view = {
+    score: document.querySelector("#score"),
+    missed: document.querySelector("#missed"),
     scoreNo: 0,
     missedNo: 0,
-    tripleShipsShot:0
+    tripleShipsShot: 0
 }
 
-
+//Creates a table with all fields to check if the ship is set on the field only once 
 var validationTable = []
-    for(i=0; i<base.colNum; i++){
-        for(j=0; j<base.rowNum; j++){
+    for (i = 0; i < base.colNum; i++){
+        for(j = 0; j < base.rowNum; j++){
 
            validationTable.push(`${i}${j}`);
         }
     }
 
-
-
+//Setting attributes to all the div elements
 function setElements() { 
     var tabl = document.querySelector("#table");
     tabl = tabl.children;
     tabl = [...tabl];
     var k = 0;
-        for(i=0; i<base.colNum; i++){
-            for(j=0; j<base.rowNum; j++){
+        for(i = 0; i < base.colNum; i++){
+            for(j = 0; j < base.rowNum; j++){
                
                 tabl[k].setAttribute("id", `field${i}${j}`);
                 tabl[k].setAttribute("onclick", `fire(${i}${j})`);   
@@ -49,137 +48,159 @@ function setElements() {
         };
 }
 
-
-
+//Returning random cell
 function randCell(){
         var randCol = (Math.floor(Math.random()*base.colNum)).toString();
         var randRow = (Math.floor(Math.random()*base.rowNum)).toString();
         var fld = (randCol + randRow).split("");
         return fld;
-        }
+}
 
-
- function horizontal(){
+//Setting ship in horizontal position
+function horizontal(){
            
-                var [row, column] = randCell();
-                
-                var ship = [row+column, row+(parseInt(column)+1), row+(parseInt(column)+2)];
-                
-                var lastCell = ship[ship.length-1];
-                
-                var [lastRow, lastColumn] = lastCell.split("");
-                
-                if(lastColumn >= 6){
-                      ship = [row+column, row+(parseInt(column)-1), row+(parseInt(column)-2)];                        
-                }
-                validateShip(ship);          
-                }
+        var [row, column] = randCell();
 
-  function vertical(){
-            
-                var [row, column] = randCell();
+        var ship = [row+column, row+(parseInt(column)+1), row+(parseInt(column)+2)];
+        var lastCell = ship[ship.length-1];
+        var [lastRow, lastColumn] = lastCell.split("");
 
-                var ship = [row+column, (parseInt(row)+1)+column, (parseInt(row)+2)+column];
-                
-                var lastCell = ship[ship.length-1];
+        if (lastColumn >= 6){
             
-                var [lastRow, lastColumn] = lastCell.split("");
+              ship = [row+column, row+(parseInt(column)-1), row+(parseInt(column)-2)];                        
+        }
+    
+        validateShip(ship);          
+}
+
+//Setting ship in vertical position
+function vertical(){
             
-                if(lastRow >= 6){
-                     ship = [row+column, (parseInt(row)-1)+column, (parseInt(row)-2)+column];    
-                }
-                validateShip(ship);
-                }
-        
+        var [row, column] = randCell();
+
+        var ship = [row+column, (parseInt(row)+1)+column, (parseInt(row)+2)+column];
+        var lastCell = ship[ship.length-1];
+        var [lastRow, lastColumn] = lastCell.split("");
+
+        if(lastRow >= 6){
+            
+             ship = [row+column, (parseInt(row)-1)+column, (parseInt(row)-2)+column];    
+        }
+        validateShip(ship);
+}
+
+//Choosing whether ship needs to be set in horizontal or vertical position
 function setShips(){
                   
-    for(i=0; i<base.numOfShips;i++){
+    for(i = 0; i < base.numOfShips; i++){
             
         var direction = Math.ceil(Math.random()*2);
         
         //horizontal position
         if(direction===1){
             horizontal();
-            }
+        }
+        
         //vertical position
         if(direction===2){
-          vertical();
+            vertical();
         }
-}}
+    }
+}
 
-
-
+//Chescking if this ship can be set on choosen fields
 function validateShip(ship){
 
-    for(i=0; i<base.shipLength; i++){
         if((validationTable.indexOf(ship[0])> -1) && (validationTable.indexOf(ship[1])> -1) && (validationTable.indexOf(ship[2])> -1)){
             
             validationTable.splice(validationTable.indexOf(ship[0]), 1);
             validationTable.splice(validationTable.indexOf(ship[1]), 1);
             validationTable.splice(validationTable.indexOf(ship[2]), 1);
-            parseInt(ship);
-            base.winningComb.push(ship);
             
+            //Approved, adding ship to winning combination
+            base.winningComb.push(ship);
         }
         
-        else{
+        else {
+            //Not approved, checking in which position we should choose to set additional ship
             var lastC = (ship[ship.length-1])[1];
             var penultC= (ship[ship.length-2])[1];
+            
             if(lastC===penultC){
+                
                 horizontal();
             }
             else{
+                
                 vertical();
             }
         }
     return base.winningComb;
+}
+
+//Updating the view
+function updateView(field){
+    
+    if(view.missedNo===1){
+        view.missed.innerHTML=`${view.missedNo} missed hit`;
     }
-
-
-function updateView(){
+    else {
+        view.missed.innerHTML=`${view.missedNo} missed hits`;
     
-    
-    var missedId = document.querySelector("#missed");
-    missedId.innerHTML=`${view.missedNo} missed hits`;
-    //view.missed.innerHTML=`${view.missedNo} missed hits`;
-    
-    var score = document.querySelector("#score");
-    score.innerHTML=`Score: ${view.tripleShipsShot} triple ships shot!`;
+    }
+    //If we shot all the ships
     if(view.tripleShipsShot>=5){
+        
         base.cheer.currentTime = 0;
         base.cheer.play();
+        
         document.querySelector("#table").style.backgroundImage = 'url("victory.jpg")';
-        score.innerHTML=`You shot all ${view.tripleShipsShot} ships,`;
-        missedId.innerHTML=`only ${view.missedNo} shots were missed!`;
-            for(i=0; i<base.colNum; i++){
+        
+        view.score.innerHTML=`You shot all ${view.tripleShipsShot} ships,`;
+        if(view.missedNo===1){
+            
+            view.missed.innerHTML=`only ${view.missedNo} shot was missed!`;
+        }
+        else{
+            view.missed.innerHTML=`only ${view.missedNo} shots were missed!`;
+        }
+            
+        for(i=0; i<base.colNum; i++){
             for(j=0; j<base.rowNum; j++){
              
-            document.querySelector(`#field${i}${j}`).removeAttribute("onclick");
-            document.querySelector(`#field${i}${j}`).style.cursor="default";
-            document.querySelector(`#field${i}${j}`).classList.add("grayOut");
-      
-    }}
+            removeAttr(document.querySelector(`#field${i}${j}`));
+            document.querySelector(`#field${i}${j}`).classList.add("grayOut");    
+            
+            
+            }
+        }
     }
-    
 }
 
+//updating view on the shot ship
 function shipSunk(winning){
-    base.shotShip.currentTime=0;
+   
+    base.shotShip.currentTime = 0;
     base.shotShip.play();
     
-    for(i=0 ; i<base.shipLength; i++){
-        console.log(winning[i]);
+    if(view.tripleShipsShot===1){
+        view.score.innerHTML=`Score: ${view.tripleShipsShot} triple ship shot!`;
+    }
+    else {
+        view.score.innerHTML=`Score: ${view.tripleShipsShot} triple ships shot!`; 
+    }
+    for (i=0 ; i<base.shipLength; i++){
+    
         var field = document.querySelector(`#field${winning[i]}`);
-        field.style.backgroundImage = "url('shipOnFireGray.gif')";
-        console.log(field);
-            
-}
+        field.style.backgroundImage = "url('shipOnFireGray.gif')";            
+    }
     updateView();
 }
 
+//onclick function
 function fire(id){
  
-    if(id < base.rowNum){
+    if (id < base.rowNum){
         id = "0" + id;
         var field = document.getElementById(`field${id}`);        
     }
@@ -187,51 +208,48 @@ function fire(id){
         var field = document.getElementById(`field${id}`);
     }
   
-    for(var i = 0; i < base.winningComb.length; i++){
-        var winning = base.winningComb[i];
+    for (var i = 0; i < base.winningComb.length; i++){
+       var winning = base.winningComb[i];
+        
         for(var j = 0; j < winning.length; j++){
-            
-        
-        
-    if(winning[j].indexOf(id)>-1){
-        
-        field.removeAttribute("onclick");
-        field.style.cursor="default"; 
-        winning.push("hit");
+                    
+    if (winning[j].indexOf(id)>-1){
+         
         field.style.backgroundImage = "url('shipOnFire.gif')";
+        removeAttr(field);
+        winning.push("hit");
         base.hit.currentTime=0;
         base.hit.play();
-        console.log(winning);
-        if (winning.length>=6){
+        
+
+        if (winning.length >= 6){
+            
             view.tripleShipsShot++;
             shipSunk(winning);
-
         }
-        
-        
-        
+
         return;
         }
-         
     }
 }
+    //if missed
         field.style.backgroundImage = "url('drop.jpg')";
-        field.removeAttribute("onclick");
-        field.style.cursor="default";
+        removeAttr(field);
         base.missed.currentTime=0;
         base.missed.play();
         view.missedNo++;
-        updateView();
-   
-
+        updateView(field);
 }
 
-
-
+//removing Attr
+function removeAttr(x){
+    x.removeAttribute("onclick");
+    x.style.cursor="default";
+}
 
 function init(){
-setElements();
-setShips();
-};
+    setElements();
+    setShips();
+}
 
 init();
